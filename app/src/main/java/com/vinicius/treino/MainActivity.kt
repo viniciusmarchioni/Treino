@@ -41,6 +41,70 @@ class MainActivity : AppCompatActivity() {
 
 
 
+        try {
+            val db = openOrCreateDatabase("DB_Treinos", MODE_PRIVATE, null)
+            db.execSQL("Create Table if not exists Treinos(nome varchar(20),qnt INT)")
+
+            val cursor = db.rawQuery("Select nome,qnt from Treinos", null)
+
+            val inome = cursor.getColumnIndex("nome")
+            val iqnt = cursor.getColumnIndex("qnt")
+            cursor.moveToFirst()
+
+            while (cursor != null) {
+                val nome = cursor.getString(inome)
+                val qnt = cursor.getInt(iqnt)
+
+                if (qnt > 0) {
+
+                    try {
+                        val consulta = "Select nome,peso,desc,yturl from $nome"
+                        val cursorExercicio = db.rawQuery(consulta, null)
+
+                        val inomeEx = cursor.getColumnIndex("nome")
+                        val ipeso = cursor.getColumnIndex("peso")
+                        val idesc = cursor.getColumnIndex("desc")
+                        val iyturl = cursor.getColumnIndex("yturl")
+
+                        val listHelper = mutableListOf<Exercicio>()
+
+                        while (cursorExercicio != null) {
+                            val nomeEx = cursor.getString(inomeEx)
+                            val peso = cursor.getDouble(ipeso)
+                            val desc = cursor.getString(idesc)
+                            val ytUrl = cursor.getString(iyturl)
+                            listHelper.add(Exercicio(nomeEx, peso, desc, ytUrl))
+                            cursor.moveToNext()
+                        }
+
+                        listaDeTreino.add(Treino(nome, listHelper))
+
+
+                    } catch (_: Exception) {
+
+                    }
+
+                } else {
+
+                    listaDeTreino.add(Treino(nome, mutableListOf()))
+
+                }
+                cursor.moveToNext()
+            }
+
+
+
+            adapter.notifyDataSetChanged()
+
+
+        } catch (_: Exception) {
+            Log.d("TAG", "ERRO")
+        }
+
+
+
+
+
         appbar.title = "Bom dia"
 
         add.setOnClickListener {
@@ -61,6 +125,17 @@ class MainActivity : AppCompatActivity() {
                 val x = Treino(newTrainingName.text.toString(), mutableListOf())
 
                 Log.d("TAG", x.getExercicios().size.toString())
+
+                try {
+
+                    val db = openOrCreateDatabase("DB_Treinos", MODE_PRIVATE, null)
+                    db.execSQL("Insert into Treinos(nome,qnt) VALUES ('${newTrainingName.text}',0)")
+
+                } catch (_: Exception) {
+
+                    Log.d("TAG", "ERRO INSERÇÂO")
+
+                }
 
                 listaDeTreino.add(x)
                 adapter.notifyItemInserted(listaDeTreino.size)
