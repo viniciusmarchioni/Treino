@@ -16,9 +16,46 @@
         android:titleTextColor="#c8c8c8" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/appbar" />
+
+    <RelativeLayout
+        android:id="@+id/createView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:layout_centerInParent="true"
+        android:background="#94000000">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/newName"
+            android:layout_centerHorizontal="true"
+            android:background="@color/white"
+            android:text="Nome do treino:" />
+
+        <EditText
+            android:id="@+id/newName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:minWidth="200dp"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/newButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/newName"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Salvar" />
+
+    </RelativeLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addTraining"
@@ -27,6 +64,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="45dp"
-        android:src="@android:drawable/ic_input_add" />
+        android:src="@android:drawable/ic_input_add"
+        app:elevation="1dp" />
+
 
 </RelativeLayout>
