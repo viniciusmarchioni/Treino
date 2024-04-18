@@ -1,5 +1,6 @@
 package com.vinicius.treino
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -15,6 +16,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vinicius.treino.adapter.AdapterList
+import com.vinicius.treino.adapter.OnItemClickListener
+import java.util.Objects
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +42,17 @@ class MainActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
 
+        adapter.setOnItemClickListener(object : OnItemClickListener{
+
+            val intent: Intent = Intent(this@MainActivity, TreinoActivity::class.java)
+
+
+            override fun onItemClick(position: Int) {
+                intent.putExtra("name",listaDeTreino[position].getNome())
+                startActivity(intent)
+            }
+
+        })
 
 
         try {

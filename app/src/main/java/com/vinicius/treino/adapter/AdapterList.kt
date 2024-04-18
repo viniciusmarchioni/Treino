@@ -13,6 +13,13 @@ import com.vinicius.treino.Treino
 class AdapterList(private val context: Context,private val treinos:MutableList<Treino>) :
     RecyclerView.Adapter<AdapterList.TreinoViewHolder>() {
 
+    private var mListener: OnItemClickListener? = null
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        mListener = listener
+    }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TreinoViewHolder {
         val itemLista = LayoutInflater.from(context)
@@ -25,6 +32,10 @@ class AdapterList(private val context: Context,private val treinos:MutableList<T
     override fun onBindViewHolder(holder: TreinoViewHolder, position: Int) {
         holder.nome.text = treinos[position].getNome()
         holder.qnt.text = treinos[position].getExercicios().size.toString()
+
+        holder.itemView.setOnClickListener {
+            mListener?.onItemClick(position)
+        }
 
 
     }
