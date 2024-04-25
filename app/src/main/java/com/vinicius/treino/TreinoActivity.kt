@@ -83,14 +83,17 @@ class TreinoActivity : AppCompatActivity() {
         add.setOnClickListener {
             val ex = Exercicio("Puxada alta",(40).toDouble(),"barra","yt.com/puxada")
             try {
-                db.execSQL("Insert into ${appbar.title}(nome,peso,descr,yturl) VALUES ('${ex.getNome()}',${ex.getPeso()},'${ex.getDesc()}','${ex.getYoutubeUrl()}')")
+                //db.execSQL("Insert into ${appbar.title}(nome,peso,descr,yturl) VALUES ('${ex.getNome()}',${ex.getPeso()},'${ex.getDesc()}','${ex.getYoutubeUrl()}')")
 
 
-                val cursor = db.rawQuery("Select qnt from Treinos where nome = '${appbar.title}'", null)
-                val iqnt = cursor.getColumnIndex("qnt")
-                val qnt = cursor.getInt(iqnt)
+                val cursor = db.rawQuery("Select qnt from Treinos where nome = \"${appbar.title}\"", null)
+                cursor.moveToFirst()
+                val qnt = cursor.getInt(0)
+                Log.d("TAG","-----------------------------------------$qnt ------------------------------")
 
-                db.execSQL("UPDATE Treinos SET qnt = ${qnt+1} where nome = '${appbar.title}'")
+                cursor.close()
+
+                                db.execSQL("UPDATE Treinos SET qnt = ${(qnt+1).toDouble()} where nome = '${appbar.title}'")
 
 
 

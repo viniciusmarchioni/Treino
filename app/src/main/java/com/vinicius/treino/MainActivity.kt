@@ -72,12 +72,12 @@ class MainActivity : AppCompatActivity() {
                 if (qnt > 0) {
 
                     try {
-                        val consulta = "Select nome,peso,desc,yturl from $nome"
+                        val consulta = "Select nome,peso,descr,yturl from $nome"
                         val cursorExercicio = db.rawQuery(consulta, null)
 
                         val inomeEx = cursor.getColumnIndex("nome")
                         val ipeso = cursor.getColumnIndex("peso")
-                        val idesc = cursor.getColumnIndex("desc")
+                        val idesc = cursor.getColumnIndex("descr")
                         val iyturl = cursor.getColumnIndex("yturl")
 
                         val listHelper = mutableListOf<Exercicio>()
@@ -111,8 +111,8 @@ class MainActivity : AppCompatActivity() {
             adapter.notifyDataSetChanged()
 
 
-        } catch (_: Exception) {
-            Log.d("TAG", "ERRO")
+        } catch (e: Exception) {
+            Log.d("TAG", "ERRO: $e")
         }
 
 
